@@ -7,11 +7,22 @@ var express = require('express'),
     bodyParser = require("body-parser"),
     User = require("./models/user")
 
-app.set("view engine", "ejs")
-mongoose.connect("mongodb://localhost:27017/auth_app", {useNewUrlParser: true})
+  mongoose.connect("mongodb://localhost:27017/auth_app", {useNewUrlParser: true})
 
+  app.use(require("express-session")({
+    secret: "Eric is a sexy babe",
+    resave: false,
+    saveUninitialized: false
+  }))
+  app.set("view engine", "ejs")
+  app.use(passport.initialize())
+  app.use(passport.session())
+  passport.serializeUser(User.serializeUser())
+  passport.deserializeUser(User.deserializeUser())
+
+//========== ROUTES ================
 app.get('/', function(req, res){
-  res.render("home")
+    res.render("home")
 })
 
 app.get("/secret", function(req,res){
@@ -19,7 +30,7 @@ app.get("/secret", function(req,res){
 })
 
 
-// ======================================
+// ============== PORT ========================
 app.listen(3000, function(){
   console.log("*** SERVER RUNNING ***")
 })
