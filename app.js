@@ -38,9 +38,16 @@ app.get("/register", function(req, res){
 })
 app.post("/register", function(req, res){
   User.register(new User({username: req.body.username}), req.body.password, function(err, user){
-
+    if(err){
+      console.log(err)
+      res.render("register")
+    }else{
+      passport.authenticate("local")(req, res, function(){
+        res.redirect("/secret")
+      })
+    }
   })
-})
+})    
 
 // ============== PORT ========================
 app.listen(3000, function(){
