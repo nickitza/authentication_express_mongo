@@ -4,7 +4,8 @@ var express = require('express'),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     passportLocalMongoose = require("passport-local-mongoose"),
-    bodyParser = require("body-parser")
+    bodyParser = require("body-parser"),
+    User = require("./models/user")
 
 app.set("view engine", "ejs")
 mongoose.connect("mongodb://localhost:27017/auth_app", {useNewUrlParser: true})
